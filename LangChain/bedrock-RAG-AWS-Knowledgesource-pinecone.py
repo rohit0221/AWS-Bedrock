@@ -17,7 +17,9 @@ def get_conversational_chain():
     Always say "thanks for asking!" at the end of the answer.\n
     Give the answer in as detailed manner as possible.\n
     Also always give the source details that you used to generate the answer.\n
-    Tell the exact document id and page number of the pdf.
+    Always write answers in bullets and paragraphs so that it is readable.\n
+    Tell the exact document name and page number of the pdf.\n
+    Whenever you are giving numbers like prfit numbers, give them in tabular format.
     Context:\n {context}?\n
     Question: \n{question}\n
 
