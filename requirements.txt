@@ -6,3 +6,6 @@ python-dotenv
 streamlit
 boto3
 ipykernel
+langchain_pinecone
+pypdf
+PyPDF2
