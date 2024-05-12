@@ -99,32 +99,30 @@ def handle_message(option,suboption):
             else:
                 msg = answer['output_text']
             st.session_state.messages.append({"role": "assistant", "content": msg})
-            st.chat_message("assistant").write(msg) 
-
+            st.chat_message("assistant").write(msg)
     
 def main():
     st.set_page_config("Chat PDF")
     st.header("Chat with PDF using 🌩️AWS Knowledge Sources💁")
     option = st.selectbox(
         'Which chatbot would you like to interact with?',
-        ('Finance Chatbot', 'Health Chatbot', 'Code Documentation Chatbot')
+        ('Finance Chatbot', 'Health Chatbot', 'Code Chatbot')
     )
+    if option == 'Code Chatbot':
+        suboption = st.radio(
+            "What would you like to do with your code?🧐",
+            ("Create Code Documentation", "Add Comments to my Code", "Explain the Architecture of my Code")
+        )
+        st.write('You selected:', suboption)
+        print(suboption)
+
     if option == 'Finance Chatbot':
         suboption = st.radio(
             "What insights would you like to have about the Company?📈",
             ("Revenue Numbers", "Profit Numbers", "Debt Details")
         )
         st.write('You selected:', suboption)
-
-    if option == 'Code Documentation Chatbot':
-        suboption = st.radio(
-            "What would you like to do with your code?🧐",
-            ("Create Code Documentation", "Add Comments to my Code", "Explain the Architecture of my Code")
-        )
-        st.write('You selected:', suboption)
-        st.write('Which company would you like to know about?🏦')
-        handle_message(option,suboption)
-        #handle_message_codebot(suboption)
+        print(suboption)
 
 
 
