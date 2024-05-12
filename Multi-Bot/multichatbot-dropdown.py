@@ -47,7 +47,7 @@ def get_conversational_chain_finance(option):
         6. If the answer is not in provided context just say, "answer is not available in the context", don't provide the wrong answer\n
         7. At the end of the answer and end the answer with a health related tip under a header "Did you know?".\n
         8. Always say "thanks for consulting Rohit's Health chatbot, please let me know in case you have further questions!"\n
-        9. Never print answers in plain text. Use proper tables, bullets and bolds and italics. e.g. to print the work "rohit" in bold print it in actual bold rather than printing **rohit**.\n
+        9. Never print answers in HTML format.\n
         Context:\n {context}?\n
         Question: \n{question}\n
 
