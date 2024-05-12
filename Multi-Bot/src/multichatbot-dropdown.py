@@ -10,6 +10,7 @@ from langchain_community.llms import Bedrock
 from langchain_community.retrievers import AmazonKnowledgeBasesRetriever
 from code_bot import *
 from finance_bot import *
+from health_bot import *
 from utils import *
 
 def get_conversational_chain(option,suboption):
@@ -85,16 +86,16 @@ def handle_message(option,suboption):
         user_question = next((item['content'] for item in reversed(message) if item['role'] == 'user'), None)
 
         if user_question:
-            if option == "Code Documentation Chatbot":
+            if option == "Code Chatbot":
                 answer=user_input_codebot(user_question,suboption)
             elif option == "Finance Chatbot":
                 answer=user_input_financebot(user_question,suboption)
             elif option == "Health Chatbot":
-                answer=user_input_health(user_question,suboption)                
+                answer=user_input_healthbot(user_question,suboption)                
             st.session_state.messages.append({"role": "user", "content": user_question})
             print(answer)
             print(type(answer))
-            if option == "Code Documentation Chatbot":
+            if option == "Code Chatbot":
                 msg = answer['text']
             else:
                 msg = answer['output_text']
@@ -123,7 +124,13 @@ def main():
         )
         st.write('You selected:', suboption)
         print(suboption)
-
+    if option == 'Health Chatbot':
+        suboption = st.radio(
+            "What insights would you like to have about your health Company?🩺",
+            ("Cholesterol Levels", "Kidney Health", "Liver Health")
+        )
+        st.write('You selected:', suboption)
+        print(suboption)
 
 
     # Output the choice of the user
