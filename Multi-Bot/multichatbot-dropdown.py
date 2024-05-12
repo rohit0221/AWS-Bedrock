@@ -9,7 +9,7 @@ load_dotenv()
 from langchain_community.llms import Bedrock
 from langchain_community.retrievers import AmazonKnowledgeBasesRetriever
 
-def get_conversational_chain_finance(option):
+def get_conversational_chain(option):
     if option == "Finance Chatbot":
         with open("finance_prompt.txt", "r") as file:
             prompt_template = file.read()
@@ -33,7 +33,7 @@ def user_input(user_question,option):
     knowledge_base_id=knowledge_base,
     retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 4}},)
     docs = retriever.invoke(user_question)
-    chain = get_conversational_chain_finance(option)
+    chain = get_conversational_chain(option)
     response = chain(
         {"input_documents":docs, "question": user_question}
         , return_only_outputs=True)
