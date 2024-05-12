@@ -9,9 +9,10 @@ load_dotenv()
 from langchain_community.llms import Bedrock
 from langchain_community.retrievers import AmazonKnowledgeBasesRetriever
 from code_bot import *
+from finance_bot import *
 from utils import *
 
-def get_conversational_chain(option,code_suboption):
+def get_conversational_chain(option,suboption):
     if option == "Finance Chatbot":
         with open("finance_prompt.txt", "r") as file:
             prompt_template = file.read()
@@ -19,13 +20,13 @@ def get_conversational_chain(option,code_suboption):
         with open("health_prompt.txt", "r") as file:
             prompt_template = file.read()
     elif option == "Code Documentation Chatbot":
-        if code_suboption =="Create Code Documentation":
+        if suboption =="Create Code Documentation":
             with open("code-docu-prompt.txt", "r") as file:
                 prompt_template = file.read()
-        elif code_suboption =="Add Comments to my Code":
+        elif suboption =="Add Comments to my Code":
             with open("code-comment-prompt.txt", "r") as file:
                 prompt_template = file.read()
-        elif code_suboption =="Explain the Architecture of my Code":
+        elif suboption =="Explain the Architecture of my Code":
             with open("code-architecture-prompt.txt", "r") as file:
                 prompt_template = file.read()                             
 
@@ -42,10 +43,10 @@ def get_conversational_chain(option,code_suboption):
 
     return chain
 
-def user_input(user_question,option,code_suboption):
+def user_input(user_question,option,suboption):
 
     if option == "Code Documentation Chatbot":
-        chain = get_conversational_chain(code_suboption)
+        chain = get_conversational_chain(suboption)
         response = chain(
             {"question": user_question}
             , return_only_outputs=True)
@@ -65,9 +66,9 @@ def user_input(user_question,option,code_suboption):
 
     return response
 
-def handle_message(option,code_suboption):
+def handle_message(option,suboption):
     if "messages" not in st.session_state:
-        st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+        st.session_state["messages"] = [{"role": "assistant", "content": "Bring it on!"}]
 
     for msg in st.session_state.messages:
         st.chat_message(msg["role"]).write(msg["content"])
@@ -85,11 +86,11 @@ def handle_message(option,code_suboption):
 
         if user_question:
             if option == "Code Documentation Chatbot":
-                answer=user_input_codebot(user_question,code_suboption)
+                answer=user_input_codebot(user_question,suboption)
             elif option == "Finance Chatbot":
-                answer=user_input_finance(user_question,code_suboption)
+                answer=user_input_financebot(user_question,suboption)
             elif option == "Health Chatbot":
-                answer=user_input_health(user_question,code_suboption)                
+                answer=user_input_health(user_question,suboption)                
             st.session_state.messages.append({"role": "user", "content": user_question})
             print(answer)
             print(type(answer))
@@ -109,24 +110,27 @@ def main():
         ('Finance Chatbot', 'Health Chatbot', 'Code Documentation Chatbot')
     )
     if option == 'Finance Chatbot':
-        code_suboption = st.radio(
-            "What would you like to know about the Company?",
-            ("You want to know over all Profit Numbers of a Company?", "Add Comments to my Code", "Explain the Architecture of my Code")
-        )    
+        suboption = st.radio(
+            "What insights would you like to have about the Company?📈",
+            ("Revenue Numbers", "Profit Numbers", "Debt Details")
+        )
+        st.write('You selected:', suboption)
+
     if option == 'Code Documentation Chatbot':
-        code_suboption = st.radio(
+        suboption = st.radio(
             "What would you like to do with your code?🧐",
             ("Create Code Documentation", "Add Comments to my Code", "Explain the Architecture of my Code")
         )
-        st.write('You selected:', code_suboption)
-        st.write('Please paste your code in the chat below:👨‍💻')
-        #handle_message_codebot(code_suboption)
+        st.write('You selected:', suboption)
+        st.write('Which company would you like to know about?🏦')
+        handle_message(option,suboption)
+        #handle_message_codebot(suboption)
 
 
 
     # Output the choice of the user
-    #st.write('You selected:', option, code_suboption)
-    handle_message(option,code_suboption)
+    #st.write('You selected:', option, suboption)
+    handle_message(option,suboption)
 
 
 if __name__ == "__main__":
