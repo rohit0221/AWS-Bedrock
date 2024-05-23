@@ -14,6 +14,7 @@ from health_bot import *
 from docu_bot import *
 from utils import *
 from s3_handling import *
+from youtube_handler import *
 from knowledgebase_handling import *
 import boto3
 
@@ -57,10 +58,10 @@ def handle_message(option,suboption):
     
 def main():
     st.set_page_config("Chat PDF")
-    st.header("Chat with PDF using 🌩️AWS Knowledge Sources💁")
+    st.header("Welcome to Rohit's Multibot powered by 🌩️AWS Knowledge Sources💁")
     option = st.selectbox(
         'Which chatbot would you like to interact with?',
-        ('Finance Chatbot', 'Health Chatbot', 'Code Chatbot', 'Document Chatbot')
+        ('Finance Chatbot', 'Health Chatbot', 'Code Chatbot', 'Document Chatbot','Chat with YouTube Video')
     )
     if option == 'Code Chatbot':
         suboption = st.radio(
@@ -92,7 +93,7 @@ def main():
             ("pdf document", "web page")
         )
         st.write('You selected:', suboption)
-        print(suboption)  
+        print(suboption)
         with st.sidebar:
             if suboption == "pdf document":
                 st.subheader("Your pdfs")
@@ -103,7 +104,25 @@ def main():
                         delete_all_objects('knowledgebase-test-rohit')
                         update_knowledgebase(knowledgebase)
                         upload_new_documents(docs)
+                        update_knowledgebase(knowledgebase)        
+    if option == 'Chat with YouTube Video':  
+        suboption = 'youtube'
+        st.write('You selected:', suboption)
+        print(suboption)
+        with st.sidebar:
+            if suboption == "youtube":
+                st.subheader("Your YouTube Video")
+                video_url = st.text_input("Enter the YouTube Video link here 👇")
+                if video_url:
+                    if st.button("Consume my YouTube video!"):
+                        create_transcript_file(video_url)
+                        knowledgebase='knowledge-base-quick-start-lt9bk'
+                        delete_all_objects('knowledgebase-test-rohit')
                         update_knowledgebase(knowledgebase)
+                        upload_youtube_transcript()
+                        update_knowledgebase(knowledgebase)
+
+
     # Output the choice of the user
     st.write('You selected:', option, suboption)
     handle_message(option,suboption)

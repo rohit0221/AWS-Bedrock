@@ -6,3 +6,6 @@ python-dotenv
 streamlit
 boto3
 ipykernel
+youtube_search
+youtube-transcript-api
+pytube
