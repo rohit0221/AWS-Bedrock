@@ -13,6 +13,7 @@ from finance_bot import *
 from health_bot import *
 from docu_bot import *
 from utils import *
+from s3_handling import *
 import boto3
 import tempfile
 
@@ -154,6 +155,9 @@ def main():
                 docs=st.file_uploader("Upload your PDF here and click on 'Process'",accept_multiple_files=True)
                 if st.button("Process"):
                     with st.spinner("Processing"):
+                        # Clean the bucket
+                        delete_all_objects('knowledgebase-test-rohit')
+                        # Upload new documents
                         for doc in docs:
                             # Save the file locally
                             temp_dir = tempfile.TemporaryDirectory()
