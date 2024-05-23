@@ -92,20 +92,18 @@ def main():
             ("pdf document", "web page")
         )
         st.write('You selected:', suboption)
-        print(suboption)
-
-        
-        # with st.sidebar:
-        #     if suboption == "pdf document":
-        #         st.subheader("Your pdfs")
-        #         docs=st.file_uploader("Upload your PDF here and click on 'Process'",accept_multiple_files=True)
-        #         if st.button("Process"):
-        #             with st.spinner("Processing"):
-        #                 knowledgebase='knowledge-base-quick-start-lt9bk'
-        #                 delete_all_objects('knowledgebase-test-rohit')
-        #                 update_knowledgebase(knowledgebase)
-        #                 upload_new_documents(docs)
-        #                 update_knowledgebase(knowledgebase)
+        print(suboption)  
+        with st.sidebar:
+            if suboption == "pdf document":
+                st.subheader("Your pdfs")
+                docs=st.file_uploader("Upload your PDF here and click on 'Process'",accept_multiple_files=True)
+                if st.button("Process"):
+                    with st.spinner("Processing"):
+                        knowledgebase='knowledge-base-quick-start-lt9bk'
+                        delete_all_objects('knowledgebase-test-rohit')
+                        update_knowledgebase(knowledgebase)
+                        upload_new_documents(docs)
+                        update_knowledgebase(knowledgebase)
     # Output the choice of the user
     st.write('You selected:', option, suboption)
     handle_message(option,suboption)
