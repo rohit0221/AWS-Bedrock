@@ -18,60 +18,6 @@ from knowledgebase_handling import *
 import boto3
 
 
-def get_conversational_chain(option,suboption):
-    if option == "Finance Chatbot":
-        with open("finance_prompt.txt", "r") as file:
-            prompt_template = file.read()
-    elif option == "Health Chatbot":
-        with open("health_prompt.txt", "r") as file:
-            prompt_template = file.read()
-    elif option == "Code Documentation Chatbot":
-        if suboption =="Create Code Documentation":
-            with open("code-docu-prompt.txt", "r") as file:
-                prompt_template = file.read()
-        elif suboption =="Add Comments to my Code":
-            with open("code-comment-prompt.txt", "r") as file:
-                prompt_template = file.read()
-        elif suboption =="Explain the Architecture of my Code":
-            with open("code-architecture-prompt.txt", "r") as file:
-                prompt_template = file.read()                             
-
-    model = Bedrock(model_id="meta.llama3-70b-instruct-v1:0",
-                    model_kwargs={"max_gen_len":2048, "temperature":0.5},
-                    streaming=True)
-    
-    if option == "Code Documentation Chatbot":
-        prompt = PromptTemplate(template = prompt_template,input_variables = ["question"])
-        chain = LLMChain(llm=model, prompt=prompt)
-    else:
-        prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"])
-        chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
-
-    return chain
-
-def user_input(user_question,option,suboption):
-
-    if option == "Code Documentation Chatbot":
-        chain = get_conversational_chain(suboption)
-        response = chain(
-            {"question": user_question}
-            , return_only_outputs=True)
-    else:
-        if option == "Finance Chatbot":
-            knowledge_base="OMNDAYJNHH"
-        elif option == "Health Chatbot":
-            knowledge_base="5QCOID5GYC"
-        retriever = AmazonKnowledgeBasesRetriever(
-        knowledge_base_id=knowledge_base,
-        retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 4}},)
-        docs = retriever.invoke(user_question)
-        chain = get_conversational_chain(option)
-        response = chain(
-            {"input_documents":docs, "question": user_question}
-            , return_only_outputs=True)
-
-    return response
-
 def handle_message(option,suboption):
     if "messages" not in st.session_state:
         st.session_state["messages"] = [{"role": "assistant", "content": "Bring it on!"}]
