@@ -1,4 +1,7 @@
 import boto3
+import tempfile
+import os
+import streamlit as st
 
 def delete_all_objects(bucket_name):
     # Initialize a session using Amazon S3
@@ -29,5 +32,15 @@ def delete_all_objects(bucket_name):
     else:
         print("The bucket is already empty.")
 
-
-
+def upload_new_documents(docs):             
+    for doc in docs:
+        # Save the file locally
+        temp_dir = tempfile.TemporaryDirectory()
+        local_path = os.path.join(temp_dir.name, doc.name)
+        with open(local_path, 'wb') as f:
+            f.write(doc.read())
+        client = boto3.client('s3')
+        bucket_name = 'knowledgebase-test-rohit'
+        object_name = doc.name
+        response = client.upload_file(local_path, bucket_name, object_name)
+        st.success("File(s) uploaded successfully!")

@@ -14,8 +14,8 @@ from health_bot import *
 from docu_bot import *
 from utils import *
 from s3_handling import *
+from knowledgebase_handling import *
 import boto3
-import tempfile
 
 
 def get_conversational_chain(option,suboption):
@@ -155,20 +155,14 @@ def main():
                 docs=st.file_uploader("Upload your PDF here and click on 'Process'",accept_multiple_files=True)
                 if st.button("Process"):
                     with st.spinner("Processing"):
+                        knowledgebase='knowledge-base-quick-start-lt9bk'
                         # Clean the bucket
                         delete_all_objects('knowledgebase-test-rohit')
+                        update_knowledgebase(knowledgebase)
                         # Upload new documents
-                        for doc in docs:
-                            # Save the file locally
-                            temp_dir = tempfile.TemporaryDirectory()
-                            local_path = os.path.join(temp_dir.name, doc.name)
-                            with open(local_path, 'wb') as f:
-                                f.write(doc.read())
-                            client = boto3.client('s3')
-                            bucket_name = 'knowledgebase-test-rohit'
-                            object_name = doc.name
-                            response = client.upload_file(local_path, bucket_name, object_name)
-                            st.success("File(s) uploaded successfully!")
+                        upload_new_documents(docs)
+                        # refresh knowledge base
+                        update_knowledgebase(knowledgebase)
 
             
                    
