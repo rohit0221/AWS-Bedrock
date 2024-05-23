@@ -16,6 +16,7 @@ from utils import *
 from s3_handling import *
 from youtube_handler import *
 from knowledgebase_handling import *
+from youtube_bot import *
 import boto3
 
 
@@ -45,7 +46,9 @@ def handle_message(option,suboption):
             elif option == "Health Chatbot":
                 answer=user_input_healthbot(user_question,suboption)
             elif option == "Document Chatbot":
-                answer=user_input_docubot(user_question,suboption)                                     
+                answer=user_input_docubot(user_question,suboption)
+            elif option == "Chat with YouTube Video":
+                answer=user_input_youtubebot(user_question,suboption)                                                    
             st.session_state.messages.append({"role": "user", "content": user_question})
             print(answer)
             print(type(answer))
@@ -106,13 +109,16 @@ def main():
                         upload_new_documents(docs)
                         update_knowledgebase(knowledgebase)        
     if option == 'Chat with YouTube Video':  
-        suboption = 'youtube'
+        suboption = st.radio(
+            "What insights do you want from the youtube video?🎬",
+            ("Give me the video summary", "Ask Questions from the video")
+        )
         st.write('You selected:', suboption)
         print(suboption)
         with st.sidebar:
-            if suboption == "youtube":
+            if (suboption == "Give me the video summary") or (suboption == "Ask Questions from the video"):
                 st.subheader("Your YouTube Video")
-                video_url = st.text_input("Enter the YouTube Video link here 👇")
+                video_url = st.text_input("Enter the YouTube Video link here and press 'Enter'' 👇")
                 if video_url:
                     if st.button("Consume my YouTube video!"):
                         create_transcript_file(video_url)
