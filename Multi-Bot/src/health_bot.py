@@ -32,7 +32,7 @@ def get_conversational_chain_healthbot(suboption):
     return chain
 
 def user_input_healthbot(user_question,suboption):
-    knowledge_base="5QCOID5GYC"
+    knowledge_base="5QCOID5GYC"# correct
     retriever = AmazonKnowledgeBasesRetriever(
     knowledge_base_id=knowledge_base,
     retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 4}},)

@@ -131,17 +131,15 @@ def main():
         )
         st.write('You selected:', suboption)
         print(suboption)
-    if option == 'Health Chatbot':
-        suboption = st.radio(
-            "Choose your datasource type?📜",
-            ("pdf document", "web page")
-        )    
+        
+    if option == 'Health Chatbot':  
         suboption = st.radio(
             "What insights would you like to have about your health Company?🩺",
             ("Cholesterol Levels", "Kidney Health", "Liver Health")
         )
         st.write('You selected:', suboption)
         print(suboption)
+
     if option == 'Docubot':
         suboption = st.radio(
             "Choose your datasource type?📜",
@@ -149,28 +147,21 @@ def main():
         )
         st.write('You selected:', suboption)
         print(suboption)
-        with st.sidebar:
-            if suboption == "pdf document":
-                st.subheader("Your pdfs")
-                docs=st.file_uploader("Upload your PDF here and click on 'Process'",accept_multiple_files=True)
-                if st.button("Process"):
-                    with st.spinner("Processing"):
-                        knowledgebase='knowledge-base-quick-start-lt9bk'
-                        # Clean the bucket
-                        delete_all_objects('knowledgebase-test-rohit')
-                        update_knowledgebase(knowledgebase)
-                        # Upload new documents
-                        upload_new_documents(docs)
-                        # refresh knowledge base
-                        update_knowledgebase(knowledgebase)
-
-            
-                   
-
-
+        
+        # with st.sidebar:
+        #     if suboption == "pdf document":
+        #         st.subheader("Your pdfs")
+        #         docs=st.file_uploader("Upload your PDF here and click on 'Process'",accept_multiple_files=True)
+        #         if st.button("Process"):
+        #             with st.spinner("Processing"):
+        #                 knowledgebase='knowledge-base-quick-start-lt9bk'
+        #                 delete_all_objects('knowledgebase-test-rohit')
+        #                 update_knowledgebase(knowledgebase)
+        #                 upload_new_documents(docs)
+        #                 update_knowledgebase(knowledgebase)
     # Output the choice of the user
-    #st.write('You selected:', option, suboption)
-    ##############handle_message(option,suboption)
+    st.write('You selected:', option, suboption)
+    handle_message(option,suboption)
 
 
 if __name__ == "__main__":
