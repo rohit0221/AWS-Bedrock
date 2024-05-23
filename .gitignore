@@ -4,3 +4,6 @@
 env/
 venv/
 Faiss_index/
+__pycache__/
+.__pycache__
+

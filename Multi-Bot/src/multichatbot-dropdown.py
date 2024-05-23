@@ -11,7 +11,11 @@ from langchain_community.retrievers import AmazonKnowledgeBasesRetriever
 from code_bot import *
 from finance_bot import *
 from health_bot import *
+from docu_bot import *
 from utils import *
+import boto3
+import tempfile
+
 
 def get_conversational_chain(option,suboption):
     if option == "Finance Chatbot":
@@ -91,7 +95,9 @@ def handle_message(option,suboption):
             elif option == "Finance Chatbot":
                 answer=user_input_financebot(user_question,suboption)
             elif option == "Health Chatbot":
-                answer=user_input_healthbot(user_question,suboption)                
+                answer=user_input_healthbot(user_question,suboption)
+            elif option == "DocuBot":
+                answer=user_input_docubot(user_question,suboption)                         
             st.session_state.messages.append({"role": "user", "content": user_question})
             print(answer)
             print(type(answer))
@@ -107,7 +113,7 @@ def main():
     st.header("Chat with PDF using 🌩️AWS Knowledge Sources💁")
     option = st.selectbox(
         'Which chatbot would you like to interact with?',
-        ('Finance Chatbot', 'Health Chatbot', 'Code Chatbot')
+        ('Finance Chatbot', 'Health Chatbot', 'Code Chatbot', 'Docubot')
     )
     if option == 'Code Chatbot':
         suboption = st.radio(
@@ -126,16 +132,47 @@ def main():
         print(suboption)
     if option == 'Health Chatbot':
         suboption = st.radio(
+            "Choose your datasource type?📜",
+            ("pdf document", "web page")
+        )    
+        suboption = st.radio(
             "What insights would you like to have about your health Company?🩺",
             ("Cholesterol Levels", "Kidney Health", "Liver Health")
         )
         st.write('You selected:', suboption)
         print(suboption)
+    if option == 'Docubot':
+        suboption = st.radio(
+            "Choose your datasource type?📜",
+            ("pdf document", "web page")
+        )
+        st.write('You selected:', suboption)
+        print(suboption)
+        with st.sidebar:
+            if suboption == "pdf document":
+                st.subheader("Your pdfs")
+                docs=st.file_uploader("Upload your PDF here and click on 'Process'",accept_multiple_files=True)
+                if st.button("Process"):
+                    with st.spinner("Processing"):
+                        for doc in docs:
+                            # Save the file locally
+                            temp_dir = tempfile.TemporaryDirectory()
+                            local_path = os.path.join(temp_dir.name, doc.name)
+                            with open(local_path, 'wb') as f:
+                                f.write(doc.read())
+                            client = boto3.client('s3')
+                            bucket_name = 'knowledgebase-test-rohit'
+                            object_name = doc.name
+                            response = client.upload_file(local_path, bucket_name, object_name)
+                            st.success("File(s) uploaded successfully!")
+
+            
+                   
 
 
     # Output the choice of the user
     #st.write('You selected:', option, suboption)
-    handle_message(option,suboption)
+    ##############handle_message(option,suboption)
 
 
 if __name__ == "__main__":
