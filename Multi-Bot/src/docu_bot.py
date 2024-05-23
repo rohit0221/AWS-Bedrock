@@ -15,12 +15,13 @@ def get_prompttemplate_docubot(suboption):
     if suboption =="pdf document":
         with open("../prompts/docu-bot/pdf.txt", "r") as file:
             prompt_template = file.read()
-    # elif suboption =="Kidney docu":
-    #     with open("../prompts/docu-bot/profit-prompt.txt", "r") as file:
-    #         prompt_template = file.read()
-    # elif suboption =="Liver docu":
-    #     with open("../prompts/docu-bot/liver-prompt.txt", "r") as file:
-    #         prompt_template = file.read() 
+            print(prompt_template)
+    elif suboption =="Kidney Health":
+        with open("../prompts/health-bot/profit-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption =="Liver Health":
+        with open("../prompts/health-bot/liver-prompt.txt", "r") as file:
+            prompt_template = file.read() 
     return prompt_template            
 
 
@@ -32,7 +33,6 @@ def get_conversational_chain_docubot(suboption):
     return chain
 
 def user_input_docubot(user_question,suboption):
-    print("I am in docubot pucket")
     knowledge_base="ROEZ7VMG8N"
     retriever = AmazonKnowledgeBasesRetriever(
     knowledge_base_id=knowledge_base,

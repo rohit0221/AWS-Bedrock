@@ -43,8 +43,8 @@ def handle_message(option,suboption):
                 answer=user_input_financebot(user_question,suboption)
             elif option == "Health Chatbot":
                 answer=user_input_healthbot(user_question,suboption)
-            elif option == "DocuBot":
-                answer=user_input_docubot(user_question,suboption)                         
+            elif option == "Document Chatbot":
+                answer=user_input_docubot(user_question,suboption)                                     
             st.session_state.messages.append({"role": "user", "content": user_question})
             print(answer)
             print(type(answer))
@@ -60,7 +60,7 @@ def main():
     st.header("Chat with PDF using 🌩️AWS Knowledge Sources💁")
     option = st.selectbox(
         'Which chatbot would you like to interact with?',
-        ('Finance Chatbot', 'Health Chatbot', 'Code Chatbot', 'Docubot')
+        ('Finance Chatbot', 'Health Chatbot', 'Code Chatbot', 'Document Chatbot')
     )
     if option == 'Code Chatbot':
         suboption = st.radio(
@@ -86,13 +86,14 @@ def main():
         st.write('You selected:', suboption)
         print(suboption)
 
-    if option == 'Docubot':
+    if option == 'Document Chatbot':  
         suboption = st.radio(
             "Choose your datasource type?📜",
             ("pdf document", "web page")
         )
         st.write('You selected:', suboption)
         print(suboption)
+
         
         # with st.sidebar:
         #     if suboption == "pdf document":

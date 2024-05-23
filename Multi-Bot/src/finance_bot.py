@@ -20,7 +20,7 @@ def get_prompttemplate_financebot(suboption):
             prompt_template = file.read()
     elif suboption =="Debt Details":
         with open("../prompts/finance-bot/debt-prompt.txt", "r") as file:
-            prompt_template = file.read() 
+            prompt_template = file.read()
     return prompt_template            
 
 
