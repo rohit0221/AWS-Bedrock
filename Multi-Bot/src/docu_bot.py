@@ -33,9 +33,10 @@ def get_conversational_chain_docubot(suboption):
     return chain
 
 def user_input_docubot(user_question,suboption):
-    knowledge_base="ROEZ7VMG8N"
+    knowledgebaseid=os.getenv("KNOWLEDGE_BASE_DOCUBOT")
+    #knowledge_base="ROEZ7VMG8N"
     retriever = AmazonKnowledgeBasesRetriever(
-    knowledge_base_id=knowledge_base,
+    knowledge_base_id=knowledgebaseid,
     retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 4}},)
     docs = retriever.invoke(user_question)   
     chain = get_conversational_chain_docubot(suboption)

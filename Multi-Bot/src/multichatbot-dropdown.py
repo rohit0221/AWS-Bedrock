@@ -103,11 +103,14 @@ def main():
                 docs=st.file_uploader("Upload your PDF here and click on 'Process'",accept_multiple_files=True)
                 if st.button("Process"):
                     with st.spinner("Processing"):
-                        knowledgebase='knowledge-base-quick-start-lt9bk'
-                        delete_all_objects('knowledgebase-test-rohit')
-                        update_knowledgebase(knowledgebase)
-                        upload_new_documents(docs)
-                        update_knowledgebase(knowledgebase)        
+                        knowledgebaseid=os.getenv("KNOWLEDGE_BASE_DOCUBOT")
+                        datasourceid=os.getenv("DATASOURCE_DOCUBOT")
+                        bucketname=os.getenv("BUCKET_DOCUBOT")
+                        #knowledgebase='knowledge-base-quick-start-lt9bk'
+                        delete_all_objects(bucketname)
+                        update_knowledgebase(knowledgebaseid,datasourceid)
+                        upload_new_documents(docs,bucketname)
+                        update_knowledgebase(knowledgebaseid,datasourceid)        
     if option == 'Chat with YouTube Video':  
         suboption = st.radio(
             "What insights do you want from the youtube video?🎬",

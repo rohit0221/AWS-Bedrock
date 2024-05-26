@@ -32,7 +32,8 @@ def get_conversational_chain_financebot(suboption):
     return chain
 
 def user_input_financebot(user_question,suboption):
-    knowledge_base="OMNDAYJNHH"
+    #knowledge_base="OMNDAYJNHH"
+    knowledge_base = os.getenv("KNOWLEDGE_BASE_FINANCE")
     retriever = AmazonKnowledgeBasesRetriever(
     knowledge_base_id=knowledge_base,
     retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 4}},)

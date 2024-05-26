@@ -32,7 +32,7 @@ def delete_all_objects(bucket_name):
     else:
         print("The bucket is already empty.")
 
-def upload_new_documents(docs):             
+def upload_new_documents(docs,bucketname):             
     for doc in docs:
         # Save the file locally
         temp_dir = tempfile.TemporaryDirectory()
@@ -40,7 +40,7 @@ def upload_new_documents(docs):
         with open(local_path, 'wb') as f:
             f.write(doc.read())
         client = boto3.client('s3')
-        bucket_name = 'knowledgebase-test-rohit'
+        bucket_name = bucketname
         object_name = doc.name
         response = client.upload_file(local_path, bucket_name, object_name)
         st.success("File(s) uploaded successfully!")
