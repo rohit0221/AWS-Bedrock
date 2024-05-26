@@ -20,7 +20,7 @@ from youtube_bot import *
 import boto3
 
 
-def handle_message(option,suboption):
+def handle_message(option,suboption,suboption2):
     if "messages" not in st.session_state:
         st.session_state["messages"] = [{"role": "assistant", "content": "Bring it on!"}]
 
@@ -44,7 +44,8 @@ def handle_message(option,suboption):
             elif option == "Finance Chatbot":
                 answer=user_input_financebot(user_question,suboption)
             elif option == "Health Chatbot":
-                answer=user_input_healthbot(user_question,suboption)
+                if suboption == "Analyse my health report":
+                    answer=user_input_healthbot(user_question,suboption,suboption2)
             elif option == "Document Chatbot":
                 answer=user_input_docubot(user_question,suboption)
             elif option == "Chat with YouTube Video":
@@ -96,13 +97,32 @@ def main():
         
     if option == 'Health Chatbot':  
         suboption = st.radio(
-            "What insights would you like to have about your health Company?🩺",
-            ("Cholesterol Levels", "Kidney Health", "Liver Health")
+            "What can I do for you to improve your fitness?🤸🏼‍♂️",
+            ("General Health related query","Prepare a Diet Plan, Create an fitness program", "Analyse my health report")
         )
         st.write('You selected:', suboption)
         print(suboption)
+        if suboption == "General Health related query":
+            st.write('Please go ahead and type in your question in the chat')
+        elif suboption == "Prepare a Diet Plan": 
+            suboption2 = st.radio(
+                "What insights do you want from your health report?🩺",
+                ("Cholesterol Levels", "Kidney Health", "Liver Health")
+            )               
+        elif suboption == "Create an fitness program": 
+            suboption2 = st.radio(
+                "What insights do you want from your health report?🩺",
+                ("Cholesterol Levels", "Kidney Health", "Liver Health")
+            )
+        elif suboption == "Analyse my health report": 
+            suboption2 = st.radio(
+                "What insights do you want from your health report?🩺",
+                ("Cholesterol Levels", "Kidney Health", "Liver Health")
+            )                       
+               
+
         with st.sidebar:
-            if suboption == "analyse my health report":
+            if suboption == "Analyse my health report":
                 st.subheader("Your health report")
                 docs=st.file_uploader("Upload your health report here and click on 'Process'",accept_multiple_files=True)
                 if st.button("Process"):
@@ -113,7 +133,7 @@ def main():
                         delete_all_objects(bucketname)
                         update_knowledgebase(knowledgebaseid,datasourceid)
                         upload_new_documents(docs,bucketname)
-                        update_knowledgebase(knowledgebaseid,datasourceid)  
+                        update_knowledgebase(knowledgebaseid,datasourceid)
 
     if option == 'Document Chatbot':  
         suboption = st.radio(
@@ -159,7 +179,7 @@ def main():
 
     # Output the choice of the user
     st.write('You selected:', option, suboption)
-    handle_message(option,suboption)
+    handle_message(option,suboption, suboption2)
 
 
 if __name__ == "__main__":
