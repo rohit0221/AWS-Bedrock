@@ -73,6 +73,7 @@ def main():
         )
         st.write('You selected:', suboption)
         print(suboption)
+        suboption2 ="Code Chatbot"
 
     if option == 'Finance Chatbot':
         suboption = st.radio(
@@ -81,6 +82,7 @@ def main():
         )
         st.write('You selected:', suboption)
         print(suboption)
+        suboption2 ="Finance Chatbot"
         with st.sidebar:
             st.subheader("Your company's financial report")
             docs=st.file_uploader("Upload your company's financial report here and click on 'Process'",accept_multiple_files=True)
@@ -179,6 +181,7 @@ def main():
         )
         st.write('You selected:', suboption)
         print(suboption)
+        suboption2 ="Document Chatbot"
         with st.sidebar:
             if suboption == "pdf document":
                 st.subheader("Your pdfs")
