@@ -81,6 +81,18 @@ def main():
         )
         st.write('You selected:', suboption)
         print(suboption)
+        with st.sidebar:
+            st.subheader("Your company's financial report")
+            docs=st.file_uploader("Upload your company's financial report here and click on 'Process'",accept_multiple_files=True)
+            if st.button("Process"):
+                with st.spinner("Processing"):
+                    knowledgebaseid=os.getenv("KNOWLEDGE_BASE_FINANCE")
+                    datasourceid=os.getenv("DATASOURCE_FINANCE")
+                    bucketname=os.getenv("BUCKET_FINANCE")
+                    delete_all_objects(bucketname)
+                    update_knowledgebase(knowledgebaseid,datasourceid)
+                    upload_new_documents(docs,bucketname)
+                    update_knowledgebase(knowledgebaseid,datasourceid)          
         
     if option == 'Health Chatbot':  
         suboption = st.radio(
@@ -89,6 +101,19 @@ def main():
         )
         st.write('You selected:', suboption)
         print(suboption)
+        with st.sidebar:
+            if suboption == "analyse my health report":
+                st.subheader("Your health report")
+                docs=st.file_uploader("Upload your health report here and click on 'Process'",accept_multiple_files=True)
+                if st.button("Process"):
+                    with st.spinner("Processing"):
+                        knowledgebaseid=os.getenv("KNOWLEDGE_BASE_HEALTH")
+                        datasourceid=os.getenv("DATASOURCE_HEALTH")
+                        bucketname=os.getenv("BUCKET_HEALTH")
+                        delete_all_objects(bucketname)
+                        update_knowledgebase(knowledgebaseid,datasourceid)
+                        upload_new_documents(docs,bucketname)
+                        update_knowledgebase(knowledgebaseid,datasourceid)  
 
     if option == 'Document Chatbot':  
         suboption = st.radio(
