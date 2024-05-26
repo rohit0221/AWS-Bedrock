@@ -62,12 +62,12 @@ def handle_message(option,suboption,suboption2):
 def main():
     st.set_page_config("Chat PDF")
     st.header("Welcome to Rohit's Multibot powered by 🌩️AWS Knowledge Sources💁")
-    option = st.selectbox(
+    option = st.radio(
         'Which chatbot would you like to interact with?',
         ('Finance Chatbot', 'Health Chatbot', 'Code Chatbot', 'Document Chatbot','Chat with YouTube Video')
     )
     if option == 'Code Chatbot':
-        suboption = st.radio(
+        suboption = st.selectbox(
             "What would you like to do with your code?🧐",
             ("Create Code Documentation", "Add Comments to my Code", "Explain the Code", "Create Architecture Diagram")
         )
@@ -76,7 +76,7 @@ def main():
         suboption2 ="Code Chatbot"
 
     if option == 'Finance Chatbot':
-        suboption = st.radio(
+        suboption = st.selectbox(
             "What insights would you like to have about the Company?📈",
             ("Revenue Numbers", "Profit Numbers", "Debt Details")
         )
@@ -97,7 +97,7 @@ def main():
                     update_knowledgebase(knowledgebaseid,datasourceid)          
         
     if option == 'Health Chatbot':  
-        suboption = st.radio(
+        suboption = st.selectbox(
             "What can I do for you to improve your fitness?🤸🏼‍♂️",
             ("General Health related query","Prepare a Diet Plan", "Create an fitness program", "Analyse my health report")
         )
@@ -197,24 +197,28 @@ def main():
                         upload_new_documents(docs,bucketname)
                         update_knowledgebase(knowledgebaseid,datasourceid)        
     if option == 'Chat with YouTube Video':  
-        suboption = st.radio(
+        suboption = st.selectbox(
             "What insights do you want from the youtube video?🎬",
-            ("Give me the video summary", "Ask Questions from the video")
+            ("Give me the video summary", "Chat with Youtube Video")
         )
         st.write('You selected:', suboption)
         print(suboption)
+        suboption2 ="Chat with YouTube Video"
         with st.sidebar:
-            if (suboption == "Give me the video summary") or (suboption == "Ask Questions from the video"):
+            if (suboption == "Give me the video summary") or (suboption == "Chat with Youtube Video"):
                 st.subheader("Your YouTube Video")
                 video_url = st.text_input("Enter the YouTube Video link here and press 'Enter'' 👇")
                 if video_url:
                     if st.button("Consume my YouTube video!"):
                         create_transcript_file(video_url)
-                        knowledgebase='knowledge-base-quick-start-lt9bk'
-                        delete_all_objects('knowledgebase-test-rohit')
-                        update_knowledgebase(knowledgebase)
-                        upload_youtube_transcript()
-                        update_knowledgebase(knowledgebase)
+                        knowledgebaseid=os.getenv("KNOWLEDGE_BASE_YOUTUBE")
+                        datasourceid=os.getenv("DATASOURCE_YOUTUBE")
+                        bucketname=os.getenv("BUCKET_YOUTUBE")
+                        #knowledgebase='knowledge-base-quick-start-lt9bk'
+                        delete_all_objects(bucketname)
+                        update_knowledgebase(knowledgebaseid,datasourceid)
+                        upload_youtube_transcript(bucketname)
+                        update_knowledgebase(knowledgebaseid,datasourceid)
 
 
     # Output the choice of the user

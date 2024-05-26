@@ -13,15 +13,12 @@ from utils import *
 
 def get_prompttemplate_youtubebot(suboption):
     if suboption =="Give me the video summary":
-        with open("../prompts/youtube-bot/summary.txt", "r") as file:
+        with open("../prompts/youtube-bot/youtube-video-summary-prompt.txt", "r") as file:
             prompt_template = file.read()
             print(prompt_template)
-    elif suboption =="Kidney Health":
-        with open("../prompts/health-bot/profit-prompt.txt", "r") as file:
+    elif suboption =="Chat with Youtube Video":
+        with open("../prompts/youtube-bot/chat-with-video-prompt.txt", "r") as file:
             prompt_template = file.read()
-    elif suboption =="Liver Health":
-        with open("../prompts/health-bot/liver-prompt.txt", "r") as file:
-            prompt_template = file.read() 
     return prompt_template            
 
 
@@ -33,7 +30,8 @@ def get_conversational_chain_youtubebot(suboption):
     return chain
 
 def user_input_youtubebot(user_question,suboption):
-    knowledge_base="ROEZ7VMG8N"
+    knowledge_base = os.getenv("KNOWLEDGE_BASE_YOUTUBE")
+    #knowledge_base="ROEZ7VMG8N"
     retriever = AmazonKnowledgeBasesRetriever(
     knowledge_base_id=knowledge_base,
     retrieval_config={"vectorSearchConfiguration": {"numberOfResults": 4}},)

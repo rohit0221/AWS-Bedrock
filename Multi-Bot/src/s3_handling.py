@@ -45,9 +45,9 @@ def upload_new_documents(docs,bucketname):
         response = client.upload_file(local_path, bucket_name, object_name)
         st.success("File(s) uploaded successfully!")
 
-def upload_youtube_transcript():
+def upload_youtube_transcript(bucketname):
     client = boto3.client('s3')
-    bucket_name = 'knowledgebase-test-rohit'
+    bucket_name = bucketname
     file_name='../youtube_transcripts/video-transcript.txt'
     object_name = os.path.basename('../youtube_transcripts/video-transcript.txt')
     response = client.upload_file(file_name, bucket_name, object_name)    

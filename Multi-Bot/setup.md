@@ -13,12 +13,14 @@ BUCKET_FINANCE="bedrock-bucket-finance"
 knowledge-base-docubot
 knowledge-base-health
 knowledge-base-finance
+knowledge-base-youtube
 
 ## Create datasource in each
 
 datasource-docubot
 datasource-health
 datasource-finance
+datasource-youtube
 
 ## Link S3 buckets to these datasources
 
@@ -41,7 +43,7 @@ Create knowledge base button
 vectordb-docubot
 vectordb-health
 vectordb-finance
-
+vectordb-youtube
 
 
 
