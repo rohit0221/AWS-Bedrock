@@ -69,7 +69,7 @@ def main():
     if option == 'Code Chatbot':
         suboption = st.radio(
             "What would you like to do with your code?🧐",
-            ("Create Code Documentation", "Add Comments to my Code", "Explain the Architecture of my Code")
+            ("Create Code Documentation", "Add Comments to my Code", "Explain the Code", "Create Architecture Diagram")
         )
         st.write('You selected:', suboption)
         print(suboption)

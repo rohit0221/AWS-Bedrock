@@ -16,7 +16,10 @@ def get_prompttemplate_codebot(code_suboption):
     elif code_suboption =="Add Comments to my Code":
         with open("../prompts/code-bot/code-comment-prompt.txt", "r") as file:
             prompt_template = file.read()
-    elif code_suboption =="Explain the Architecture of my Code":
+    elif code_suboption =="Explain the Code":
+        with open("../prompts/code-bot/explain-code-prompt.txt", "r") as file:
+            prompt_template = file.read()            
+    elif code_suboption =="Create Architecture Diagram":
         with open("../prompts/code-bot/code-architecture-prompt.txt", "r") as file:
             prompt_template = file.read() 
     return prompt_template            
