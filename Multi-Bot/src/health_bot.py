@@ -13,14 +13,20 @@ from utils import *
 
 def get_prompttemplate_healthbot(suboption2):
     if suboption2 =="Cholesterol Levels":
-        with open("../prompts/health-bot/revenue-prompt.txt", "r") as file:
+        with open("../prompts/health-bot/cholesterol-prompt.txt", "r") as file:
             prompt_template = file.read()
     elif suboption2 =="Kidney Health":
-        with open("../prompts/health-bot/profit-prompt.txt", "r") as file:
+        with open("../prompts/health-bot/kidney-prompt.txt", "r") as file:
             prompt_template = file.read()
     elif suboption2 =="Liver Health":
         with open("../prompts/health-bot/liver-prompt.txt", "r") as file:
-            prompt_template = file.read() 
+            prompt_template = file.read()
+    elif suboption2 =="Overall Summary":
+        with open("../prompts/health-bot/overall-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="Have a specific question?":
+        with open("../prompts/health-bot/specific-prompt.txt", "r") as file:
+            prompt_template = file.read()
     return prompt_template            
 
 

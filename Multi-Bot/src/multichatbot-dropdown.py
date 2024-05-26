@@ -44,8 +44,7 @@ def handle_message(option,suboption,suboption2):
             elif option == "Finance Chatbot":
                 answer=user_input_financebot(user_question,suboption)
             elif option == "Health Chatbot":
-                if suboption == "Analyse my health report":
-                    answer=user_input_healthbot(user_question,suboption,suboption2)
+                answer=user_input_healthbot(user_question,suboption,suboption2)
             elif option == "Document Chatbot":
                 answer=user_input_docubot(user_question,suboption)
             elif option == "Chat with YouTube Video":
@@ -98,26 +97,30 @@ def main():
     if option == 'Health Chatbot':  
         suboption = st.radio(
             "What can I do for you to improve your fitness?🤸🏼‍♂️",
-            ("General Health related query","Prepare a Diet Plan, Create an fitness program", "Analyse my health report")
+            ("General Health related query","Prepare a Diet Plan", "Create an fitness program", "Analyse my health report")
         )
         st.write('You selected:', suboption)
         print(suboption)
         if suboption == "General Health related query":
-            st.write('Please go ahead and type in your question in the chat')
+            suboption2 = st.radio(
+                "Alright! How can I help you?",
+                ("mental health", "physical health")
+            )  
+            st.write('Sure thing! Please go ahead and type in your question in the chat')
         elif suboption == "Prepare a Diet Plan": 
             suboption2 = st.radio(
-                "What insights do you want from your health report?🩺",
-                ("Cholesterol Levels", "Kidney Health", "Liver Health")
-            )               
+                "Alright! What type of food plan do you wish to follow?🥗",
+                ("vegetarian", "non vegetarian", "vegan", "ketogenic", "intermittent fasting","mediterranean", "calorie deficit", "detox","paleo diet")
+            )  
         elif suboption == "Create an fitness program": 
             suboption2 = st.radio(
-                "What insights do you want from your health report?🩺",
-                ("Cholesterol Levels", "Kidney Health", "Liver Health")
+                "Okayyy...What type of workouts do you like?🏋️‍♂️",
+                ("cardio", "strength training", "flexibility and balance workout", "high intensity interval training", "group fitness plan","circuit training", "body weight workouts")
             )
         elif suboption == "Analyse my health report": 
             suboption2 = st.radio(
-                "What insights do you want from your health report?🩺",
-                ("Cholesterol Levels", "Kidney Health", "Liver Health")
+                "Thats a good way to start being healthy! What insights do you want from your health report?🩺",
+                ("Cholesterol Levels", "Kidney Health", "Liver Health", "Overall Summary", "Have a specific question?")
             )                       
                
 
@@ -134,7 +137,41 @@ def main():
                         update_knowledgebase(knowledgebaseid,datasourceid)
                         upload_new_documents(docs,bucketname)
                         update_knowledgebase(knowledgebaseid,datasourceid)
-
+            elif suboption == "Prepare a Diet Plan":
+                            st.subheader("Lets, prepare a diet plan for you!")
+                            st.write('Perfect! 🌯🍱🍜🍲You selected:', suboption)
+                            st.write('''\n
+                                     🌮🍕🥪\n
+                                     In order for me to fine-tune your diet plan,\n
+                                     please provide your diet preferences \n
+                                     in the following format \n
+                                     and send it to me:\n
+                                     👉 Calorie Limit:______________\n
+                                     👉 Favourite Items to prepare the food:______________\n
+                                     👉 Average Cooking time:______________''')
+            elif suboption == "Create an fitness program":
+                            st.subheader("Lets, prepare a fitness program for you!")
+                            st.write('Great🧘‍♀️! You selected:', suboption)
+                            st.write('''\n
+                                     🏃🏋️🤾\n
+                                     In order for me to create a plan that\n
+                                     you are likely to love and follow,\n
+                                     please provide your workout preferences\n
+                                     in the following format\n
+                                     and send it to me:\n
+                                     👉 Time that you can spend on workouts each day:______________\n
+                                     👉 Intensity level:______________\n
+                                     👉 Indoor/Outdoor:______________''')
+            elif suboption == "General Health related query":
+                            st.subheader("Lets, help you!")
+                            st.write('Great❤️! You selected:', suboption)
+                            
+                            st.write('''\n
+                                     🙋‍♂️📜🙌💭\n
+                                     In order for me to help you\n
+                                     please provide your question in\n
+                                     as detailed way as possible\n
+                                     and send it to me:\n''')
     if option == 'Document Chatbot':  
         suboption = st.radio(
             "Choose your datasource type?📜",
@@ -178,8 +215,8 @@ def main():
 
 
     # Output the choice of the user
-    st.write('You selected:', option, suboption)
-    handle_message(option,suboption, suboption2)
+    st.write('You selected:', option, suboption,suboption2)
+    handle_message(option,suboption,suboption2)
 
 
 if __name__ == "__main__":
