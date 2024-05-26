@@ -12,22 +12,58 @@ from utils import *
 
 
 def get_prompttemplate_healthbot(suboption2):
+
+    # health report
     if suboption2 =="Cholesterol Levels":
-        with open("../prompts/health-bot/cholesterol-prompt.txt", "r") as file:
+        with open("../prompts/health-bot/health-report/cholesterol-prompt.txt", "r") as file:
             prompt_template = file.read()
     elif suboption2 =="Kidney Health":
-        with open("../prompts/health-bot/kidney-prompt.txt", "r") as file:
+        with open("../prompts/health-bot/health-report/kidney-prompt.txt", "r") as file:
             prompt_template = file.read()
     elif suboption2 =="Liver Health":
-        with open("../prompts/health-bot/liver-prompt.txt", "r") as file:
+        with open("../prompts/health-bot/health-report/liver-prompt.txt", "r") as file:
             prompt_template = file.read()
     elif suboption2 =="Overall Summary":
-        with open("../prompts/health-bot/overall-prompt.txt", "r") as file:
+        with open("../prompts/health-bot/health-report/overall-prompt.txt", "r") as file:
             prompt_template = file.read()
     elif suboption2 =="Have a specific question?":
-        with open("../prompts/health-bot/specific-prompt.txt", "r") as file:
+        with open("../prompts/health-bot/health-report/specific-prompt.txt", "r") as file:
             prompt_template = file.read()
-    return prompt_template            
+    # Fitness program
+
+    elif suboption2 =="cardio":
+        with open("../prompts/health-bot/fitness-program/cardio-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="strength training":
+        with open("../prompts/health-bot/fitness-program/strength-training-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="flexibility and balance workout":
+        with open("../prompts/health-bot/fitness-program/flexibility-and-balance-workout-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="high intensity interval training":
+        with open("../prompts/health-bot/fitness-program/high-intensity-interval-training-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="group fitness plan":
+        with open("../prompts/health-bot/fitness-program/group-fitness-plan-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="circuit training":
+        with open("../prompts/health-bot/fitness-program/circuit-training-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="body weight workouts":
+        with open("../prompts/health-bot/fitness-program/bodyweight-workouts-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    #specific question
+    elif suboption2 =="mental health":
+        with open("../prompts/health-bot/general-query/mental-health-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="physical health":
+        with open("../prompts/health-bot/general-query/physical-health-prompt.txt", "r") as file:
+            prompt_template = file.read()            
+
+
+
+
+    return prompt_template          
 
 
 def get_conversational_chain_healthbot(suboption2):
