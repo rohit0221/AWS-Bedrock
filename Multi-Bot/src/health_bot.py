@@ -52,6 +52,37 @@ def get_prompttemplate_healthbot(suboption2):
     elif suboption2 =="body weight workouts":
         with open("../prompts/health-bot/fitness-program/bodyweight-workouts-prompt.txt", "r") as file:
             prompt_template = file.read()
+
+    #specific question
+    elif suboption2 =="vegetarian":
+        with open("../prompts/health-bot/diet-planning/vegetarian-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="non vegetarian":
+        with open("../prompts/health-bot/diet-planning/non-vegetarian-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="vegan":
+        with open("../prompts/health-bot/diet-planning/vegan-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="ketogenic":
+        with open("../prompts/health-bot/diet-planning/ketogenic-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="intermittent fasting":
+        with open("../prompts/health-bot/diet-planning/intermittent-fasting-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="mediterranean":
+        with open("../prompts/health-bot/diet-planning/mediterranean-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="calorie deficit":
+        with open("../prompts/health-bot/diet-planning/calorie-deficit-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="detox":
+        with open("../prompts/health-bot/diet-planning/detox-prompt.txt", "r") as file:
+            prompt_template = file.read()
+    elif suboption2 =="paleo diet":
+        with open("../prompts/health-bot/diet-planning/paleo-diet-prompt.txt", "r") as file:
+            prompt_template = file.read()
+            
+
     #specific question
     elif suboption2 =="mental health":
         with open("../prompts/health-bot/general-query/mental-health-prompt.txt", "r") as file:
